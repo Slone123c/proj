@@ -1,7 +1,10 @@
 package eHotel.connections;
+import static org.junit.Assert.assertNotNull;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
 
 import eHotel.entities.Room;
 import eHotel.entities.customer;
@@ -14,22 +17,14 @@ public class  PostgreSqlConn{
 	    PreparedStatement ps = null;
 	    ResultSet rs = null;
 	    Statement st = null;
-	    String sql;
+	    String sql = new String();
 
 
-		public void getConn(){
-			
-			try {
-				
-				Class.forName("org.postgresql.Driver"); 
-								
+		public void getConn() throws Exception {			
+				Class.forName("org.postgresql.Driver"); 							
 				db = DriverManager.getConnection("jdbc:postgresql://web0.site.uottawa.ca:15432/group_a01_g39",
-						"username", "password");
-															
-			}catch(Exception e) {
-				System.out.print("error catched");
-			}
-						
+						"schen359", "Aaa19720103");														
+					
 		}
 		
 		public void closeDB() {
@@ -53,7 +48,7 @@ public class  PostgreSqlConn{
 
 		
 		public String getpwdbyUname(String param){
-			getConn();
+			//this.getConn();
 
 			String pwd = "";
 			
@@ -77,8 +72,7 @@ public class  PostgreSqlConn{
 		
 		
 		public String[] getuserinforbycustSSN(String param){
-			getConn();
-
+			//this.getConn();
 			String[] pwd = new String[3];
 			
 	        try{
@@ -102,8 +96,7 @@ public class  PostgreSqlConn{
 	    }
 		
 		public boolean insertNewCustomer(String[] param){
-			getConn();
-
+			//this.getConn();
 			
 	        try{
 	        	st = db.createStatement();
@@ -125,7 +118,7 @@ public class  PostgreSqlConn{
 		
 		public  ArrayList<Room> getAllAvailRooms(){
 			
-			getConn();
+			//this.getConn();
 			
 			ArrayList<Room> Rooms = new ArrayList<Room>();
 			
@@ -151,7 +144,7 @@ public class  PostgreSqlConn{
 		
 		public  ArrayList<Room> getbookedRooms(String custSSN){
 			
-			getConn();
+		//	this.getConn();
 			
 			ArrayList<Room> Rooms = new ArrayList<Room>();
 			
@@ -176,9 +169,9 @@ public class  PostgreSqlConn{
 		}
 		
 		public String bookRoom(String custName, String roomno){
-			getConn();
+			//this.getConn();
 			String custSSN="";
-			
+		
 	        try{
 	        	
 	        	ps = db.prepareStatement("select customer_ssn from ehotel.customer where customer_name='"+custName+"'");
@@ -205,8 +198,9 @@ public class  PostgreSqlConn{
 			      
 	    }
 		
-		public int modifyData(String sql,Object[] obj) {
-			getConn();
+		public int modifyData(String sql,Object[] obj) throws Exception {
+			
+			this.getConn();
 			int result=0;
 			try {
 				ps = db.prepareStatement(sql);
@@ -218,15 +212,30 @@ public class  PostgreSqlConn{
 			} catch (Exception e) {
 				// TODO: handle exception
 				e.printStackTrace();
+			}finally {
+				db.close();
 			}
 			return result;
 
 			}
 			
-		public ResultSet getData(String sql,Object[] obj){
-			getConn();
+		public ResultSet getData(String sql,Object[] obj) throws Exception{
+			if (db==null) {
+				this.getConn();
+			}
 			try {
+				if(db!=null) {
+					System.out.println("db is not null!");
+				}else {
+					System.out.println("db is null!");
+				}
+						
 				ps = db.prepareStatement(sql);
+				if(ps!=null) {
+					System.out.println("ps is not null!");
+				}else {
+					System.out.println("ps is null!");
+				}
 				for(int i =0;i<obj.length;i++) {
 					ps.setObject(i+1, obj[i]);
 				}
@@ -234,6 +243,8 @@ public class  PostgreSqlConn{
 			} catch (Exception e) {
 				// TODO: handle exception
 				e.printStackTrace();
+			}finally {
+				db.close();
 			}
 			return rs;
 		}
@@ -254,28 +265,40 @@ public class  PostgreSqlConn{
 //				return count;		
 //		
 //		}
-		public List<customer> getAllCustomer(){
+		public List<customer> getAllCustomer() throws Exception{
 			sql= "select * from project.customer";
-			ResultSet resultSet=getData(sql, new Object[] {});
+			rs=getData(sql, new Object[] {});
+			if(rs!=null) {
+				System.out.println("rs is not null!");
+			}else {
+				System.out.println("rs is null!.");
+			}
 			List<customer> list = new ArrayList<customer>();
 			try {
-				while(resultSet.next()) {
+				
+				while(rs.next()) {
 					customer cr= new customer();
-					cr.setCustomer_sin_number(resultSet.getString(1));
-					cr.setPwd(resultSet.getString(2));
-					cr.setFull_name(resultSet.getString(3));
-					cr.setCustomer_address(resultSet.getString(4));
+					cr.setCustomer_sin_number(rs.getString(1));			
+					cr.setPwd(rs.getString(2));
+					cr.setFull_name(rs.getString(3));
+					cr.setCustomer_address(rs.getString(4));
 					list.add(cr);
 				}
 				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			}finally {
+				closeDB();
 			}
 			return list;
 		}
 		
+		public int deleteCustomerBySin(String sin) throws Exception {
 		
+			sql = "delete from project.customer where customer_sin_number=?";
+			return modifyData(sql, new Object[] {sin});
+		}
 		
 		
 		

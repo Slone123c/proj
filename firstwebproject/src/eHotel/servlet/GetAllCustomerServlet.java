@@ -24,11 +24,15 @@ public class GetAllCustomerServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//HttpSession session = request.getSession();
 		PostgreSqlConn con = new PostgreSqlConn();
-		List<customer> list=con.getAllCustomer();
+		List<customer> list = null;
+		try {
+			list = con.getAllCustomer();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		request.setAttribute("list", list);
-		//request.getSession().setAttribute("list", list);
 		request.getRequestDispatcher("/show.jsp").forward(request, response);
 		//return;
 	}
