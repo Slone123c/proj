@@ -1,0 +1,1 @@
+INSERT INTO customer VALUES(88888888,aa123,Shilong,Ottawa)
