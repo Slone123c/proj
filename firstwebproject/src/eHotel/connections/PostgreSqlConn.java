@@ -223,18 +223,8 @@ public class  PostgreSqlConn{
 				this.getConn();
 			}
 			try {
-				if(db!=null) {
-					System.out.println("db is not null!");
-				}else {
-					System.out.println("db is null!");
-				}
 						
 				ps = db.prepareStatement(sql);
-				if(ps!=null) {
-					System.out.println("ps is not null!");
-				}else {
-					System.out.println("ps is null!");
-				}
 				for(int i =0;i<obj.length;i++) {
 					ps.setObject(i+1, obj[i]);
 				}
@@ -267,14 +257,9 @@ public class  PostgreSqlConn{
 		public List<customer> getAllCustomer() throws Exception{
 			sql= "select * from project.customer";
 			rs=getData(sql, new Object[] {});
-			if(rs!=null) {
-				System.out.println("rs is not null!");
-			}else {
-				System.out.println("rs is null!.");
-			}
 			List<customer> list = new ArrayList<customer>();
 			try {
-				
+				System.out.println("Getting customer data.");
 				while(rs.next()) {
 					customer cr= new customer();
 					cr.setCustomer_sin_number(rs.getString(1));			
@@ -286,8 +271,10 @@ public class  PostgreSqlConn{
 				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
+				System.out.println("Fail");
 				e.printStackTrace();
 			}finally {
+				System.out.println("Success.");
 				closeDB();
 			}
 			return list;
@@ -324,23 +311,9 @@ public class  PostgreSqlConn{
 			return this.modifyData(sql,new Object[] {cust.getFull_name(),cust.getPwd(),cust.getCustomer_address(),cust.getCustomer_sin_number()} );
 		}
 		
-		public int loginAdmin(String[] param) {
-			sql="select* from project.admin where admin_id=?,admin_pwd=?";
-			try {
-				ps=db.prepareStatement(sql);
-				ps.setString(1, param[0]);
-				ps.setString(2, param[1]);
-				rs = ps.executeQuery();
-				if(rs.next()) {
-					return 1;
-				}
-				
-			} catch (Exception e) {
-				// TODO: handle exception
-			}finally {
-				closeDB();
-			}
-			return 0;
+		public ResultSet loginAdmin(Object[] param) throws Exception {
+			sql="select * from project.admin where admin_id=? and admin_pwd=?";
+			return this.getData(sql, param);
 		}
 		
 //		public static void main(String []args) {
