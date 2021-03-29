@@ -1,5 +1,4 @@
 package eHotel.connections;
-import static org.junit.Assert.assertNotNull;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -79,12 +78,12 @@ public class  PostgreSqlConn{
 	        	sql="select * from project.customer where customer_sin_number=?";
 	            ps = db.prepareStatement(sql);
 	            ps.setString(1, param);//let db search for SIN_number= param.	               
-	            rs = ps.executeQuery();
-	
+	            rs = ps.executeQuery();	            
 				while(rs.next()) {
 					pwd[0] = rs.getString(1);
 					pwd[1] = rs.getString(2);
 					pwd[2] = rs.getString(3);
+					pwd[3] = rs.getString(4);
 				}
 	            
 	        }catch(SQLException e){
@@ -100,7 +99,7 @@ public class  PostgreSqlConn{
 			
 	        try{
 	        	st = db.createStatement();
-	        	sql = "insert into ehotel.customer values('"+param[0]+"','"+param[1]+"','"+param[2]+"')";
+	        	sql = "insert into project.customer values('"+param[0]+"','"+param[1]+"','"+param[2]+"')";
 	        	
 	        	System.out.print(sql);
 	            
@@ -300,8 +299,49 @@ public class  PostgreSqlConn{
 			return modifyData(sql, new Object[] {sin});
 		}
 		
+		public customer getCustomerBySIN(String sin) throws Exception {
+			sql = "select* from project.customer where customer_sin_number=?";
+			rs=getData(sql, new Object[] {sin});
+			customer cust = new customer();
+			try {
+				while(rs.next()) {
+					cust.setCustomer_sin_number(rs.getString(1));
+					cust.setPwd(rs.getString(2));
+					cust.setFull_name(rs.getString(3));
+					cust.setCustomer_address(rs.getString(4));
+				}
+				
+			} catch (Exception e) {
+				// TODO: handle exception
+			}finally {
+				closeDB();
+			}
+			return cust;
+		}
 		
+		public int updateCustomerBySIN(customer cust) throws Exception {
+			sql="update project.customer set full_name=?,pwd=?,customer_address=? where customer_sin_number=?";
+			return this.modifyData(sql,new Object[] {cust.getFull_name(),cust.getPwd(),cust.getCustomer_address(),cust.getCustomer_sin_number()} );
+		}
 		
+		public int loginAdmin(String[] param) {
+			sql="select* from project.admin where admin_id=?,admin_pwd=?";
+			try {
+				ps=db.prepareStatement(sql);
+				ps.setString(1, param[0]);
+				ps.setString(2, param[1]);
+				rs = ps.executeQuery();
+				if(rs.next()) {
+					return 1;
+				}
+				
+			} catch (Exception e) {
+				// TODO: handle exception
+			}finally {
+				closeDB();
+			}
+			return 0;
+		}
 		
 //		public static void main(String []args) {
 //			PostgreSqlConn con = new PostgreSqlConn();

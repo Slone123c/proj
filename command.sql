@@ -92,6 +92,10 @@ CREATE TABLE project.employee(
 
 )
 
+CREATE TABLE project.admin(
+    admin_id VARCHAR NOT NULL PRIMARY KEY,
+    admin_pwd VARCHAR NOT NULL.
+)
 
 
 CREATE FUNCTION check_room_status()

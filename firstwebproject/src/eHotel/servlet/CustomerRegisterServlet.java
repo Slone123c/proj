@@ -25,11 +25,12 @@ public class CustomerRegisterServlet extends HttpServlet{
 		// TODO Auto-generated method stub
 		HttpSession session = req.getSession();
 //		employee account = new employee();
-		String custSSN = req.getParameter("custSSN");
+		String custSIN = req.getParameter("custSIN");
 		String custName = req.getParameter("custName");
 		String custPwd = req.getParameter("custPwd");
+		String custAddr = req.getParameter("custAddress");
 		
-		String[] param = new String[] {custSSN,custName,custPwd};
+		String[] param = new String[] {custSIN,custPwd,custName,custAddr};
 		
 		PostgreSqlConn con = new PostgreSqlConn();
 		boolean pwdfromdb = con.insertNewCustomer(param);
@@ -39,15 +40,15 @@ public class CustomerRegisterServlet extends HttpServlet{
 		if (pwdfromdb) {			
 				System.out.println("success");
 				
-				ArrayList<Room> bookedRooms = con.getbookedRooms(custSSN);
+				//ArrayList<Room> bookedRooms = con.getbookedRooms(custSSN);
 				
-				ArrayList<Room> allRooms = con.getAllAvailRooms();
+				//ArrayList<Room> allRooms = con.getAllAvailRooms();
 				
-				System.out.println(allRooms);
+				//System.out.println(allRooms);
 				
-				req.setAttribute("CustName", custName);
-				req.setAttribute("bookedRooms", bookedRooms);
-				req.setAttribute("allRooms", allRooms);
+				//req.setAttribute("CustName", custName);
+				//req.setAttribute("bookedRooms", bookedRooms);
+				//req.setAttribute("allRooms", allRooms);
 
 				req.getRequestDispatcher("booking.jsp").forward(req, resp);
 				return;			
