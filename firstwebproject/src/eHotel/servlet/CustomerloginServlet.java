@@ -20,7 +20,7 @@ public class CustomerloginServlet extends HttpServlet {
 	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		HttpSession session = req.getSession();
+		//HttpSession session = req.getSession();
 //		employee account = new employee();
 		String userSSN = req.getParameter("userSSN");
 		String pwd = req.getParameter("pwd");

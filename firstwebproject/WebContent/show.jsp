@@ -10,14 +10,15 @@ String path = request.getContextPath();
 <meta charset="UTF-8">
 <title>Customer Table</title>
 </head>
-<body>
+<center>
+<body style="text-align:center">
 <%
 	//For displaying data
 	session.getAttribute("list");
 %>
-
-
-
+<div style="height:50px">
+	
+<hr/>
 <table>
 	<tr>
 		<td>CUSTOMER_SIN_NUMBER</td>
@@ -40,4 +41,5 @@ String path = request.getContextPath();
 	
 	</table>
 </body>
+</center>
 </html>

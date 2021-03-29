@@ -27,6 +27,17 @@
  <!-- add a customer register servlet here add a new customer in customer table -->
  <servlet>
  <description></description>
+ <display-name>adminlogin</display-name>
+ <servlet-name>adlogServlet</servlet-name>
+ <servlet-class>eHotel.servlet.AdminLoginServlet</servlet-class>
+ </servlet>
+ <servlet-mapping>
+  <servlet-name>adlogServlet</servlet-name>
+  <url-pattern>/adminlogin</url-pattern>
+ </servlet-mapping>
+ 
+ <servlet>
+ <description></description>
  <display-name>anythinghere</display-name>
  <servlet-name>custregServlet</servlet-name>
  <servlet-class>eHotel.servlet.CustomerRegisterServlet</servlet-class>

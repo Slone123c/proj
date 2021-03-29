@@ -2,6 +2,16 @@ package eHotel.entities;
 
 public class customer {
 	
+	public customer(String customer_sin_number, String pwd, String full_name, String customer_address) {
+	
+		this.customer_sin_number = customer_sin_number;
+		this.pwd = pwd;
+		this.full_name = full_name;
+		this.customer_address = customer_address;
+	}
+	public customer() {
+		// TODO Auto-generated constructor stub
+	}
 	private String customer_sin_number;
 	private String pwd;
 	private String full_name;

@@ -11,30 +11,32 @@ import eHotel.connections.PostgreSqlConn;
 import eHotel.entities.customer;
 
 /**
- * Servlet implementation class UpdateCustomerServlet
+ * Servlet implementation class DoUpdateCustomerServlet
  */
-@WebServlet("/UpdateCustomerServlet")
-public class UpdateCustomerServlet extends HttpServlet {
+@WebServlet("/DoUpdateCustomerServlet")
+public class DoUpdateCustomerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-      
-
-
+       
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String sin_number = request.getParameter("customer_sin_number");
+		String sin = request.getParameter("customer_sin_number");
+		String pwd = request.getParameter("pwd");
+		String name = request.getParameter("full_name");
+		String address = request.getParameter("customer_address");
 		PostgreSqlConn cnn = new PostgreSqlConn();
-		customer cust=null;
+		customer cust = new customer(sin,pwd,name,address);
+		int result=0;
 		try {
-			cust=cnn.getCustomerBySIN(sin_number);
-			
+			result=cnn.updateCustomerBySIN(cust);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		request.setAttribute("customer", cust);
-		request.getRequestDispatcher("/modify.jsp").forward(request, response);
-		
+		if(result==1) {
+			response.sendRedirect("/firstwebproject/GetAllCustomerServlet");
+		}else {
+			response.sendRedirect("/firstwebproject/error.jsp");
+		}
 	}
-
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub

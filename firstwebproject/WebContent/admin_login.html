@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>Admin Login</title>
+<script>
+
+	function validate() {
+		var uid = document.getElementById("aid");
+		var adminpass = document.getElementById("adminpass");
+		if(uid.value == ""){
+			alert("admin id can't be null");
+			return false;
+		}
+		else if(adminpass.value ==""){
+			alert("password can't be null");
+			return false;
+		}
+		else
+			return true;
+	}
+
+</script>
+</head>
+<body>
+	This is the admin login page.
+	<br>
+	<form method="post" action="adminlogin">
+		Admin ID:<input type="text" id="aid" name="adminid"><br>
+		<br> password:<input type="password" id="adminpass" name="adminpwd"><br>
+		<br>
+		<button type="submit" value="submit" onclick="return validate();">submit</button>
+		<button type="reset" value="reset">reset</button>
+	</form>
+</body>
+</html>
