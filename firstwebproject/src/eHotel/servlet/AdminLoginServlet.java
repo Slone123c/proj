@@ -1,6 +1,8 @@
 package eHotel.servlet;
 
 import java.io.IOException;
+import java.sql.ResultSet;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,12 +25,22 @@ public class AdminLoginServlet extends HttpServlet {
 		String adminpwd = request.getParameter("adminpwd");
 		PostgreSqlConn cnn = new PostgreSqlConn();
 		String[] param = new String[2];
+		//System.out.println(adminid);
+		//System.out.println(adminpwd);
 		param[0] = adminid;
 		param[1] = adminpwd;	
-		int i = cnn.loginAdmin(param);
-		if(i==1) {
+		ResultSet rs=null;
+		try {
+			rs = cnn.loginAdmin(param);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(rs!=null) {
+			System.out.println("admin login success");
 			response.sendRedirect("/firstwebproject/GetAllCustomerServlet");
 		}else {
+			System.out.println("admin login fail");
 			response.sendRedirect("/firstwebproject/error.jsp");
 			}
 	}
