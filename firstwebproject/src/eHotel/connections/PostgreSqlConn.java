@@ -22,7 +22,7 @@ public class  PostgreSqlConn{
 		public void getConn() throws Exception {			
 				Class.forName("org.postgresql.Driver"); 							
 				db = DriverManager.getConnection("jdbc:postgresql://web0.site.uottawa.ca:15432/group_a01_g39",
-						"username", "password");														
+						"schen359", "Aaa19720103");														
 					
 		}
 		
@@ -313,6 +313,10 @@ public class  PostgreSqlConn{
 		
 		public ResultSet loginAdmin(Object[] param) throws Exception {
 			sql="select * from project.admin where admin_id=? and admin_pwd=?";
+			return this.getData(sql, param);
+		}
+		public ResultSet customerLogin(Object[] param) throws Exception{
+			sql="select * from project.admin where customer_sin_number=? and pwd=?";
 			return this.getData(sql, param);
 		}
 		

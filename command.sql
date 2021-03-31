@@ -56,11 +56,11 @@ CREATE TABLE project.amenity(
 
 
 CREATE TABLE project.customer(
-    customer_SIN_number VARCHAR NOT NULL,
+    customer_sin_number VARCHAR NOT NULL,
     pwd VARCHAR NOT NULL,
     full_name VARCHAR NOT NULL,
     customer_address VARCHAR NOT NULL,
-    CONSTRAINT customer_SIN_number_pkey PRIMARY KEY(customer_SIN_number)
+    CONSTRAINT customer_sin_number_pkey PRIMARY KEY(customer_sin_number)
 )
 
 CREATE TABLE project.bookinfo(
@@ -85,7 +85,7 @@ CREATE TABLE project.employee(
     salary INTEGER NOT NULL,
     employee_role VARCHAR NOT NULL,
     CONSTRAINT employee_role_check CHECK(employee_role in('Manager','concierge','housekeeper')),
-    CONSTRAINT employee_sin_number_pkey PRIMARY KEY(employee_SIN_number),
+    CONSTRAINT employee_sin_number_pkey PRIMARY KEY(employee_sin_number),
     CONSTRAINT employee_id_pkey PRIMARY KEY(employee_id),
     CONSTRAINT employee_works_for_fkey FOREIGN KEY(works_for_hotel_id)
         REFERENCES project.hotel(hotel_ID)

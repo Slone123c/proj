@@ -9,6 +9,6 @@
 <%
 
 %>
-	<h4>Welcome,<%out.print(session.getAttribute("uname").toString());%>.<h4>
+	<h4>Welcome,<%out.print(session.getAttribute("customerName").toString());%>.<h4>
 </body>
 </html>

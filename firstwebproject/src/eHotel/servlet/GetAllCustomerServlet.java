@@ -15,7 +15,7 @@ import eHotel.entities.customer;
 
 @WebServlet("/GetAllCustomerServlet")
 public class GetAllCustomerServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 15L;
 
 
 

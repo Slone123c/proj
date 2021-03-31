@@ -15,7 +15,7 @@ import eHotel.entities.customer;
  */
 @WebServlet("/DoUpdateCustomerServlet")
 public class DoUpdateCustomerServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 14L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String sin = request.getParameter("customer_sin_number");
